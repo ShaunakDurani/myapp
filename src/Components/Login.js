@@ -1,11 +1,12 @@
 import { useState, useRef } from "react";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import checkValidData from "../Utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../Utils/firebase";
+import { auth, provider } from "../Utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
 import { BG_IMAGE, PROFILE_PIC } from "../Utils/constants";
@@ -65,6 +66,27 @@ const Login = () => {
     }
   };
 
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        dispatch(
+          addUser({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          })
+        );
+        navigate("/browse"); // <- ✅ ADD THIS LINE
+      })
+      .catch((error) => {
+        console.error("Google sign-in error:", error.message);
+      });
+  };
+
   return (
     <div className="relative min-h-screen bg-black text-white">
       <Header1 />
@@ -116,6 +138,12 @@ const Login = () => {
           onClick={handleClick}
         >
           {isSignedIn ? "Sign In" : "Sign Up"}
+        </button>
+        <button
+          className="bg-red-600 hover:bg-red-700 p-3 sm:p-4 m-2 w-full rounded-lg font-bold transition"
+          onClick={signInWithGoogle}
+        >
+          Sign in with Google
         </button>
 
         <p
