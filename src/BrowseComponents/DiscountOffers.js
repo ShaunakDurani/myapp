@@ -70,7 +70,7 @@ const DiscountCard = ({ data }) => {
 
   return (
     <div
-      className="border border-blue-600 rounded-lg cursor-pointer mr-4 lg:w-[277px] h-[188px] _coupon overflow-hidden flex flex-col"
+      className="border border-blue-600 rounded-lg cursor-pointer w-full h-[188px] _coupon overflow-hidden flex flex-col"
       onClick={() => showDiscountInfo()}
     >
       <div className="p-4">
@@ -125,7 +125,7 @@ const DiscountOffers = () => {
           customButtonGroup={<CarouselButtonGroup />}
           shouldResetAutoplay={false}
           infinite={false}
-          itemClass=""
+          itemClass="px-2"
           partialVisible
         >
           {allOffers?.map((offer, i) => (

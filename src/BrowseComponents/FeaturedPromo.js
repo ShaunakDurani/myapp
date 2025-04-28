@@ -56,13 +56,13 @@ const FeaturedPromo = () => {
           customButtonGroup={<CarouselButtonGroup />}
           shouldResetAutoplay={false}
           infinite={false}
-          itemClass="mr-2"
+          itemClass="px-2"
           partialVisible
         >
           {promos?.map((promo, i) => (
             <div
               key={i}
-              className="rounded-lg w-full lg:w-[360px] cursor-pointer max-h-[280px] sm:h-[200px] overflow-hidden"
+              className="rounded-lg w-full  lg:w-full cursor-pointer max-h-[280px] sm:h-[200px] overflow-hidden"
             >
               <img
                 src={promo}

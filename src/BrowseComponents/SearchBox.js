@@ -1,19 +1,34 @@
-import { FiSearch } from "react-icons/fi";
+import { useState } from "react";
 
-const SearchBox = () => {
+const Search = ({ onSearch, searchQuery, setSearchQuery }) => {
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(searchQuery);
+  };
+
   return (
-    <div className="_searchbox">
-      <FiSearch
-        className="absolute top-1/2 -translate-y-1/2 left-4 text-gray-400"
-        size={24}
-      />
-      <input
-        type="text"
-        placeholder="Search for products"
-        className="outline-none w-full text-[14px]"
-      />
+    <div className="w-full">
+      <form onSubmit={handleSubmit} className="flex w-full">
+        <input
+          type="text"
+          placeholder="Search for products"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="w-full px-4 py-2 border rounded-l focus:outline-none"
+        />
+        <button
+          type="submit"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-r"
+        >
+          Search
+        </button>
+      </form>
     </div>
   );
 };
 
-export default SearchBox;
+export default Search;

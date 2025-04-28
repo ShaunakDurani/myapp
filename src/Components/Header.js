@@ -58,9 +58,6 @@ const Header1 = () => {
           </div>
 
           {/* Search Box */}
-          <div className="flex-1 min-w-[150px]">
-            <SearchBox />
-          </div>
 
           {/* User Icon */}
           <div className="flex items-center justify-center sm:px-2 cursor-pointer">

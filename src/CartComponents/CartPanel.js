@@ -6,9 +6,12 @@ import AddToCartButton from "./AddToCartButton";
 import Misc from "../Data/layout.json";
 import SuggestedItems from "./SuggestedItems";
 import { shuffleItems } from "../BrowseComponents/helper";
+import { useEffect } from "react";
 
 const CartPanelItem = (props) => {
   const { image, title, subTitle, price, mrp } = props.product;
+  const dispatch = useDispatch();
+
   return (
     <div className="flex p-4 gap-4 border-t _border-muted">
       <div>
@@ -48,12 +51,18 @@ const CartPanel = () => {
   const { totalAmount, totalQuantity, cartItems, billAmount, discount } =
     useSelector((state) => state.cart);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden"; // Lock background scroll when cart opens
+    return () => {
+      document.body.style.overflow = "auto"; // Unlock background scroll when cart closes
+    };
+  }, []);
+
   const productItems = Misc.filter((item) => item.type === 77).map(
     (el) => el.objects
   );
 
   const allProducts = [];
-
   productItems.forEach((obj) => {
     const items = obj[0].data.products.map((product) => product[0]);
     allProducts.push(...items);
@@ -66,13 +75,19 @@ const CartPanel = () => {
   const topProducts = shuffleItems(otherProducts).slice(0, 10);
 
   return (
-    <div className="fixed inset-0 h-screen w-screen z-50 overflow-hidden p-4">
-      <div
-        className="absolute z-10 inset-0 bg-black bg-opacity-[.65]"
-        onClick={() => dispatch(hideCart())}
-      />
-      <aside className="_drawer flex flex-col overflow-y-auto overflow-x-hidden">
-        <div className="sticky top-0 bg-white flex items-center justify-between p-4">
+    <div
+      className="fixed inset-0 h-screen w-screen z-50 p-4"
+      onClick={() => dispatch(hideCart())}
+    >
+      {/* Background Black Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-65 z-10" />
+
+      {/* Cart Panel */}
+      <aside
+        className="absolute right-0 top-0 bottom-0 w-full sm:w-[400px] bg-white flex flex-col overflow-y-auto z-20"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="sticky top-0 bg-white flex items-center justify-between p-4 z-30">
           <h2 className="font-extrabold text-2xl _text-default">My Cart</h2>
           <IoClose
             size={24}
@@ -80,6 +95,7 @@ const CartPanel = () => {
             onClick={() => dispatch(hideCart())}
           />
         </div>
+
         {totalQuantity === 0 ? (
           <div className="flex-1 bg-white p-6">
             <div className="flex flex-col gap-3 justify-center items-center text-center">
@@ -103,14 +119,15 @@ const CartPanel = () => {
           <>
             <div className="flex-1">
               <div className="space-y-3 my-3">
+                {/* Shipment Summary */}
                 <div className="bg-white border-y _border-muted">
                   <div className="flex flex-col px-4 pt-5">
                     <div className="flex justify-between _text-muted text-xs">
-                      <span>shipment of 1 of 1</span>
+                      <span>Shipment of 1 of 1</span>
                       <span>{totalQuantity} items</span>
                     </div>
                     <p className="text-sm _text-default font-bold mb-1">
-                      Delivery in some times
+                      Delivery in some time
                     </p>
                   </div>
                   <div className="divide-y-1">
@@ -119,6 +136,8 @@ const CartPanel = () => {
                     ))}
                   </div>
                 </div>
+
+                {/* Suggested Items */}
                 <div className="bg-white">
                   <div className="font-bold text-xl text-black pt-5 px-4">
                     Before you checkout
@@ -127,6 +146,8 @@ const CartPanel = () => {
                     <SuggestedItems topItems={topProducts} />
                   </div>
                 </div>
+
+                {/* Bill Details */}
                 <div className="bg-white">
                   <div className="font-bold text-xl text-black pt-5 px-4">
                     Bill Details
@@ -137,22 +158,22 @@ const CartPanel = () => {
                       <span>₹{totalAmount}</span>
                     </div>
                     <div className="flex items-start justify-between _text-default">
-                      <span>Product discount</span>
+                      <span>Product Discount</span>
                       <span>- ₹{discount}</span>
                     </div>
                     <div className="flex items-start justify-between _text-default">
                       <p className="flex flex-col">
-                        <span>Delivery charge</span>
+                        <span>Delivery Charge</span>
                         <span className="text-[#0c831f]">
                           Hooray! You saved ₹15 on delivery charge
                         </span>
                       </p>
                       <span>
-                        ₹15 <span className="text-[#0c831f]">free</span>{" "}
+                        ₹15 <span className="text-[#0c831f]">free</span>
                       </span>
                     </div>
                     <div className="flex items-start justify-between text-[14px] text-black font-bold py-2">
-                      <span>Bill total</span>
+                      <span>Bill Total</span>
                       <span>₹{billAmount}</span>
                     </div>
                   </div>
@@ -162,6 +183,8 @@ const CartPanel = () => {
                 </div>
               </div>
             </div>
+
+            {/* Checkout Button */}
             <div className="sticky bottom-0 bg-white px-4 pt-2 pb-4 min-h-[68px] _shadow_sticky">
               <div className="bg-[#0c831f] cursor-pointer text-white flex items-center px-3 py-3 rounded-[4px] font-medium text-[14px]">
                 <div className="font-bold">{totalQuantity} Items</div>
