@@ -6,6 +6,7 @@ import FeaturedPromo from "../BrowseComponents/FeaturedPromo";
 import HighlightedPromo from "../BrowseComponents/HighlightedPromo";
 import ProductsRow from "../BrowseComponents/ProductsRow";
 import Misc from "../Data/layout.json";
+import Footer from "./Footer";
 
 const Browse = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -204,6 +205,7 @@ const Browse = () => {
           {productItems.map((products, i) => (
             <ProductsRow key={i} {...products} />
           ))}
+          <Footer />
         </div>
       )}
     </div>

@@ -34,7 +34,7 @@ const AddToCartButton = ({ product, size }) => {
       <button
         onClick={remove}
         type="button"
-        className="flex items-center justify-center w-8"
+        className="flex items-center justify-center w-8 "
       >
         <IoRemoveSharp size={18} className="text-white" />
       </button>

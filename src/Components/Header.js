@@ -1,19 +1,15 @@
 import { useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useDispatch } from "react-redux";
 import { auth } from "../Utils/firebase";
 import { addUser, removeUser } from "../Utils/userSlice";
-import { LOGO } from "../Utils/constants"; // use your logo path
 import { FaRegUser } from "react-icons/fa";
 import { CartButton } from "../CartComponents/cart";
-import LocationPicker from "../BrowseComponents/LocationPicker";
-import SearchBox from "../BrowseComponents/SearchBox";
 
 const Header1 = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.user);
   const location = useLocation();
 
   useEffect(() => {
@@ -22,54 +18,57 @@ const Header1 = () => {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
           addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
+            uid,
+            email,
+            displayName,
+            photoURL,
           })
         );
       } else {
         dispatch(removeUser());
-        navigate("/"); // redirect to login if not authenticated
+        navigate("/");
       }
     });
 
     return () => unsubscribe();
   }, [dispatch, navigate]);
 
-  // If we're on the login page, show only logo
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      dispatch(removeUser());
+      navigate("/");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   const isLoginPage = location.pathname === "/";
 
   return (
-    <header className="flex flex-wrap items-center justify-between bg-yellow-50 p-4 shadow-sm">
+    <header className="flex items-center justify-between bg-yellow-50 px-6 py-3 shadow-md">
       {/* Logo */}
       <Link to={"/"} className="flex items-center">
-        <span className="font-black text-[28px] md:text-[34px] text-yellow-400 tracking-tight">
+        <span className="font-black text-2xl md:text-3xl text-yellow-400 tracking-tight">
           bring<strong className="text-green-600">It</strong>
         </span>
       </Link>
 
-      {/* Show rest only if not on login page */}
+      {/* Right Section */}
       {!isLoginPage && (
-        <div className="flex flex-1 flex-wrap items-center justify-between gap-4 mt-4 sm:mt-0 sm:flex-nowrap sm:gap-2 w-full sm:w-auto">
-          {/* Location Picker */}
-          <div className=" mx-10 w-full sm:w-[200px] flex justify-center sm:justify-start">
-            <LocationPicker />
-          </div>
-
-          {/* Search Box */}
-
-          {/* User Icon */}
-          <div className="flex items-center justify-center sm:px-2 cursor-pointer">
-            <span className="text-gray-700 sm:hidden">
-              <FaRegUser size={22} />
-            </span>
-          </div>
-
+        <div className="flex items-center gap-4">
           {/* Cart Button */}
-          <div className="hidden md:flex items-center">
+          <div className="flex items-center">
             <CartButton />
           </div>
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="w-[112px] h-[50px] px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium"
+          >
+            Logout
+          </button>
         </div>
       )}
     </header>

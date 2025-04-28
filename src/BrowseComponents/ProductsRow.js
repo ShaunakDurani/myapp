@@ -6,13 +6,13 @@ const ProductsRow = ({ data, objects }) => {
   )[0];
 
   return (
-    <section>
+    <section className="mb-8 px-4">
       {data.show_header && (
-        <div className="flex items-center justify-between h-16">
-          <h2 className="font-bold text-[26px] _text-default">{data.title}</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-gray-800">{data.title}</h2>
           {data.show_view_all && (
-            <span className="text-green-700 font-bold cursor-pointer text-lg">
-              {data.title_action}
+            <span className="text-green-600 font-medium text-sm cursor-pointer">
+              see all
             </span>
           )}
         </div>
