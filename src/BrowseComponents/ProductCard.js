@@ -4,16 +4,7 @@ import { convertTextToURLSlug } from "./helper";
 
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
-  const {
-    product_id,
-    name,
-    unit,
-    price,
-    mrp,
-    image_url,
-    discount,
-    delivery_time,
-  } = data;
+  const { product_id, name, unit, price, mrp, image_url, delivery_time } = data;
 
   const cartProduct = {
     id: product_id.toString(),

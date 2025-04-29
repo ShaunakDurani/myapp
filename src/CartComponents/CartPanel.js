@@ -10,7 +10,6 @@ import { useEffect } from "react";
 
 const CartPanelItem = (props) => {
   const { image, title, subTitle, price, mrp } = props.product;
-  const dispatch = useDispatch();
 
   return (
     <div className="flex p-4 gap-4 border-t _border-muted">

@@ -3,7 +3,7 @@ import DairyProducts from "../Data/products/dairyProducts.json";
 import SnacksProducts from "../Data/products/snacksProducts.json";
 
 const convertTextToURLSlug = (text) => {
-  const clearText = text.replace(/[&\/\\#,+()$~%.":*?<>{}]/g, "").toLowerCase();
+  const clearText = text.replace(/[&\\#,+()$~%.":*?<>{}]/g, "").toLowerCase();
   return clearText.replace(/\s/g, "-");
 };
 

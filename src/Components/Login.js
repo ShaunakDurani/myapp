@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { auth, provider } from "../Utils/firebase";
+import { auth } from "../Utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
 import { BG_IMAGE, PROFILE_PIC } from "../Utils/constants";

@@ -4,7 +4,6 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { auth } from "../Utils/firebase";
 import { addUser, removeUser } from "../Utils/userSlice";
-import { FaRegUser } from "react-icons/fa";
 import { CartButton } from "../CartComponents/cart";
 
 const Header1 = () => {
