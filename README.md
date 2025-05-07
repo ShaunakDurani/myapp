@@ -13,4 +13,8 @@ This is a item delivery app resembling the interface of Blinkit with the followi
 
 4. Make the ui look better
 
-5. cookies for the users
+react
+redux
+react-router-dom
+tailwind
+firebase

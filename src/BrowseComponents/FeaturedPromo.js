@@ -1,8 +1,8 @@
 import Carousel from "react-multi-carousel";
-import CarouselButtonGroup from "./CarouselButtonGroup";
 import { shuffleItems } from "./helper";
 import Misc from "../Data/layout.json";
 import "react-multi-carousel/lib/styles.css";
+import React from "react";
 
 const responsive = {
   uhdDesktop: {
@@ -37,6 +37,31 @@ const responsive = {
   },
 };
 
+const CarouselButtonGroup = ({ next, previous, goToSlide, carouselState }) => {
+  const { totalItems, currentSlide, slidesToShow } = carouselState;
+  const isFirst = currentSlide === 0;
+  const isLast = currentSlide + slidesToShow >= totalItems;
+
+  return (
+    <div className="carousel-button-group flex justify-center gap-4 mt-4">
+      <button
+        onClick={previous}
+        disabled={isFirst}
+        className={`px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed`}
+      >
+        Previous
+      </button>
+      <button
+        onClick={next}
+        disabled={isLast}
+        className={`px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed`}
+      >
+        Next
+      </button>
+    </div>
+  );
+};
+
 const FeaturedPromo = () => {
   const allPromos = Misc.filter((item) => item.type === 66)[0].objects?.map(
     (el) => el.data.image_url
@@ -46,10 +71,10 @@ const FeaturedPromo = () => {
 
   return (
     <section>
-      <div className="mx-4 relative pb-2 pt-4">
+      <div className="mx-4 relative py-4">
         <Carousel
-          swipeable={false}
-          draggable={false}
+          swipeable={true} // Enable swipe
+          draggable={true} // Enable drag
           responsive={responsive}
           arrows={false}
           renderButtonGroupOutside={true}
@@ -62,11 +87,12 @@ const FeaturedPromo = () => {
           {promos?.map((promo, i) => (
             <div
               key={i}
-              className="rounded-lg w-full  lg:w-full cursor-pointer max-h-[280px] sm:h-[200px] overflow-hidden"
+              className="rounded-lg w-full cursor-pointer overflow-hidden"
+              style={{ maxHeight: "280px" }} // Added inline style for max-height
             >
               <img
                 src={promo}
-                alt="..."
+                alt={`Promo ${i + 1}`}
                 className="h-full w-full object-cover"
               />
             </div>

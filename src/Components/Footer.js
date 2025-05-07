@@ -1,14 +1,9 @@
-import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
-import {
-  convertTextToURLSlug,
-  getCategoryLink,
-} from "../BrowseComponents/helper";
 import AppStoreLogo from "../assets/images/app-store.webp";
 import PlayStoreLogo from "../assets/images/play-store.webp";
 import Brands from "../Data/brandsList.json";
@@ -54,12 +49,11 @@ const Footer = () => {
   const allCategories = Categories.map((cat) => ({
     id: cat.id,
     text: cat.title,
-    link: getCategoryLink(cat),
+    link: cat.link,
   }));
 
   const allBrands = Brands.map((brand) => ({
     text: brand,
-    link: convertTextToURLSlug(brand),
   }));
 
   return (
@@ -73,10 +67,10 @@ const Footer = () => {
             <div className="flex flex-wrap gap-y-1">
               {allCategories.map((cat) => (
                 <div
-                  className="cursor-pointer text-[15px] _text-default w-full xs:w-[50%]"
+                  className="text-[15px] _text-default w-full xs:w-[50%]"
                   key={cat.id}
                 >
-                  <Link to={cat.link}>{cat.text}</Link>
+                  {cat.text}
                 </div>
               ))}
             </div>
@@ -88,7 +82,7 @@ const Footer = () => {
             <div className="flex flex-wrap gap-y-1">
               {UsefulLinks.map((link, i) => (
                 <div
-                  className="cursor-pointer text-[15px] _text-default w-[50%] xs:w-[33%]"
+                  className="text-[15px] _text-default w-[50%] xs:w-[33%]"
                   key={i}
                 >
                   {link}
@@ -101,9 +95,9 @@ const Footer = () => {
           <h4 className="font-bold my-6 text-lg">Brands</h4>
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {allBrands.map((brand, i) => (
-              <Link key={i} to={`brand/${brand.link}`}>
-                <span className="_text-default text-sm">{brand.text}</span>
-              </Link>
+              <span key={i} className="_text-default text-sm">
+                {brand.text}
+              </span>
             ))}
           </div>
         </div>
@@ -141,14 +135,14 @@ const Footer = () => {
               <h4 className="font-bold text-md leading-none lg:mr-4 _text-default">
                 Download App
               </h4>
-              <div className="h-8 w-24 rounded-[3px] cursor-pointer overflow-hidden">
+              <div className="h-8 w-24 rounded-[3px] overflow-hidden">
                 <img
                   src={AppStoreLogo}
                   alt="App store"
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="h-8 w-24 rounded-[3px] cursor-pointer overflow-hidden">
+              <div className="h-8 w-24 rounded-[3px] overflow-hidden">
                 <img
                   src={PlayStoreLogo}
                   alt="Play store"
@@ -157,16 +151,16 @@ const Footer = () => {
               </div>
             </div>
             <div className="flex-1 flex items-center md:justify-end gap-4 lg:gap-6">
-              <div className="cursor-pointer w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
                 <FaFacebookF />
               </div>
-              <div className="cursor-pointer w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
                 <FaTwitter />
               </div>
-              <div className="cursor-pointer w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
                 <FaInstagram />
               </div>
-              <div className="cursor-pointer w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center">
                 <FaLinkedinIn />
               </div>
             </div>

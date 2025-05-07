@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import AddToCartButton from "./AddToCartButton";
 import { convertTextToURLSlug } from "./helper";
+import React from "react";
 
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
@@ -22,12 +23,12 @@ const ProductCard = ({ data }) => {
 
   return (
     <div
-      onClick={handleProductClick}
-      className="flex flex-col w-full bg-white border border-gray-100 rounded-lg cursor-pointer p-2"
+      className="flex flex-col w-full bg-white rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105" // Added shadow and hover effect
+      onClick={handleProductClick} // Make the entire card clickable
     >
       {/* Delivery Time */}
       {delivery_time && (
-        <div className="flex items-center gap-1 mb-2">
+        <div className="flex items-center gap-1 p-2">
           <svg
             className="w-4 h-4 text-gray-600"
             fill="none"
@@ -46,24 +47,32 @@ const ProductCard = ({ data }) => {
       )}
 
       {/* Product Image */}
-      <div className="flex justify-center items-center h-36 mb-3">
+      <div className="flex justify-center items-center h-48 p-4">
+        {" "}
+        {/* Increased image height */}
         <img src={image_url} alt={name} className="h-full object-contain" />
       </div>
 
       {/* Product Info */}
-      <div className="flex flex-col flex-grow">
-        <h3 className="text-sm font-medium text-gray-800 line-clamp-2 min-h-[40px]">
+      <div className="flex flex-col flex-grow p-4">
+        <h3 className="text-lg font-semibold text-gray-800 line-clamp-2 min-h-[48px] mb-2">
+          {" "}
+          {/* Increased font size and min height */}
           {name}
         </h3>
-        <p className="text-xs text-gray-500 mb-2">{unit}</p>
+        <p className="text-sm text-gray-500 mb-2">{unit}</p>
 
         {/* Price Section */}
         <div className="flex items-center justify-between mt-auto">
-          <span className="text-sm font-semibold">₹{price}</span>
+          <span className="text-xl font-bold text-gray-900">₹{price}</span>{" "}
+          {/* Increased font size and weight */}
           <div className="flex justify-end">
             <AddToCartButton product={cartProduct} />
           </div>
         </div>
+        {mrp && mrp > price && (
+          <p className="text-xs text-gray-500 line-through">MRP: ₹{mrp}</p>
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import cartReducer from "./cartSlice";
 import modalReducer from "./modalSlice";
 import uiReducer from "./uiSlice";
 import userReducer from "./userSlice";
-import searchReducer from "./searchSlice"; // <-- import searchSlice
+import searchReducer from "./searchSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,7 +11,7 @@ const store = configureStore({
     cart: cartReducer,
     modal: modalReducer,
     user: userReducer,
-    search: searchReducer, // <-- add search reducer here
+    search: searchReducer,
   },
 });
 

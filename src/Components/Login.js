@@ -59,7 +59,7 @@ const Login = () => {
         Email.current.value,
         Password.current.value
       )
-        .then(() => navigate("/browse"))
+        .then(() => navigate("/browse")) // just adding this line to navigate
         .catch((error) => {
           seterrMessage(error.code + " - " + error.message);
         });
@@ -80,7 +80,7 @@ const Login = () => {
             photoURL: user.photoURL,
           })
         );
-        navigate("/browse"); // <- ✅ ADD THIS LINE
+        navigate("/browse"); // just need to add this line
       })
       .catch((error) => {
         console.error("Google sign-in error:", error.message);
@@ -90,14 +90,6 @@ const Login = () => {
   return (
     <div className="relative min-h-screen bg-black text-white">
       <Header1 />
-      <div className="absolute top-0 left-0 w-full h-full -z-10">
-        <img
-          src={BG_IMAGE}
-          alt="bg"
-          className="object-cover w-full h-full opacity-60"
-        />
-      </div>
-
       <form
         onSubmit={(e) => e.preventDefault()}
         className="relative bg-black bg-opacity-80 p-6 sm:p-10 rounded-lg w-full sm:w-3/4 md:w-2/3 lg:w-2/5 xl:w-1/3 mx-auto mt-20"
